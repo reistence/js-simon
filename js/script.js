@@ -15,6 +15,7 @@ let rndArray = [];
 let userArray = [];
 let score = 0;
 
+// creat an array of 5 rnd nr without clones
 for (i = 0; i < 5; i++) {
   let rndNr = getRndNr(1, 100);
   if (!rndArray.includes(rndNr)) {
@@ -22,22 +23,32 @@ for (i = 0; i < 5; i++) {
   } else {
     i--;
   }
+  // sort the array in ascending order
   rndArray = rndArray.sort(function (a, b) {
     return a - b;
   });
 }
+// put the rndArray into nrSpan
 nrSpan.innerHTML = rndArray;
-console.log(rndArray);
-const vanishTime = setTimeout(vanish, 2000);
+
+//        TEST
+// console.log(rndArray);
+
+// let the rndArray into nrSpan vanish after 30s
+const vanishTime = setTimeout(vanishRndNrs, 10000);
+
+// ask the user to write the 5 nr after 31s
 const promptTime = setTimeout(() => {
   userGuess();
-  console.log(userArray);
-}, 5000);
+  //          TEST
+  //   console.log(userArray);
+}, 11000);
 
+// print the elements (rndArray, userArray, result) into the DOM
 const printTime = setTimeout(() => {
   printNrIntoDom();
   checkResult();
-}, 6000);
+}, 15000);
 
 // FUNCTIONs
 
@@ -51,10 +62,17 @@ function getRndNr(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-function vanish() {
+/**
+ * Description empties the rnd nrs array
+ */
+function vanishRndNrs() {
   nrSpan.innerHTML = "";
 }
 
+/**
+ * Description: asks the user 5 number; checks if the user wrote an
+ * actual nr and sorts them in ascendinng order
+ */
 function userGuess() {
   let i = 0;
   let guessedNr;
@@ -65,22 +83,31 @@ function userGuess() {
       i++;
     }
   } while (i < 5);
+  // sort the array in ascending order
   userArray = userArray.sort(function (a, b) {
     return a - b;
   });
 }
 
+/**
+ * Description: Prints userArray and rndArray into the according elements
+ */
 function printNrIntoDom() {
-  console.log("userarray", userArray, "rndArray", rndArray);
+  //        TEST
+  //   console.log("userarray", userArray, "rndArray", rndArray);
   yourNrs.innerHTML = userArray;
   prevNrs.innerHTML = rndArray;
 }
 
+/**
+ * Description: check whether the user's guesses match with the rndArray and
+ * updates the score accordingly
+ */
 function checkResult() {
   let matchedNr = [];
   for (let i = 0; i < rndArray.length; i++) {
     if (rndArray[i] !== userArray[i]) {
-      result.innerHTML = `Sorry, your score is ${score}. You correctly guessed only ${score} nrs: ${matchedNr}`;
+      result.innerHTML = `Sorry, your score is ${score}. You correctly guessed only ${score}: ${matchedNr}`;
     } else {
       matchedNr.push(userArray[i]);
       score++;
