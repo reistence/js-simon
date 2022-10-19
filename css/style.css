@@ -26,3 +26,7 @@ span {
 .hide {
   display: none;
 }
+
+#result {
+  font-size: 3rem;
+}

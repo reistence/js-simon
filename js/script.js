@@ -10,6 +10,7 @@ quali dei numeri da indovinare sono stati individuati.
 const nrSpan = document.getElementById("rnd-nrs");
 const prevNrs = document.getElementById("prev-nrs");
 const yourNrs = document.getElementById("your-nrs");
+const result = document.getElementById("result");
 const rndArray = [];
 let userArray = [];
 
@@ -23,8 +24,9 @@ const vanishTime = setTimeout(vanish, 2000);
 const promptTime = setTimeout(() => {
   userGuess();
   console.log(userArray);
-  printNrIntoDom(userArray, yourNrs);
 }, 5000);
+
+const printTime = setTimeout(printNrIntoDom, 6000);
 
 // FUNCTIONs
 
@@ -47,15 +49,22 @@ function userGuess() {
   let guessedNr;
   do {
     guessedNr = parseInt(prompt("Put in the previous given numbers: "));
-
     if (!isNaN(guessedNr)) {
       userArray.push(guessedNr);
       i++;
     }
   } while (i < 5);
-  return userArray;
 }
 
-function printNrIntoDom(array, element) {
-  element.innerHTML = array;
+function printNrIntoDom() {
+  console.log("userarray", userArray, "rndArray", rndArray);
+
+  yourNrs.innerHTML = userArray;
+  prevNrs.innerHTML = rndArray;
+  if (userArray === rndArray) {
+    result.innerHTML = "User won";
+  }
+  if (userArray != rndArray) {
+    result.innerHTML = "User lost";
+  }
 }
