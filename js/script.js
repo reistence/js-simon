@@ -11,13 +11,20 @@ const nrSpan = document.getElementById("rnd-nrs");
 const prevNrs = document.getElementById("prev-nrs");
 const yourNrs = document.getElementById("your-nrs");
 const result = document.getElementById("result");
-const rndArray = [];
+let rndArray = [];
 let userArray = [];
 let score = 0;
 
 for (i = 0; i < 5; i++) {
   let rndNr = getRndNr(1, 100);
-  rndArray.push(rndNr);
+  if (!rndArray.includes(rndNr)) {
+    rndArray.push(rndNr);
+  } else {
+    i--;
+  }
+  rndArray = rndArray.sort(function (a, b) {
+    return a - b;
+  });
 }
 nrSpan.innerHTML = rndArray;
 console.log(rndArray);
@@ -58,6 +65,9 @@ function userGuess() {
       i++;
     }
   } while (i < 5);
+  userArray = userArray.sort(function (a, b) {
+    return a - b;
+  });
 }
 
 function printNrIntoDom() {
@@ -70,11 +80,11 @@ function checkResult() {
   let matchedNr = [];
   for (let i = 0; i < rndArray.length; i++) {
     if (rndArray[i] !== userArray[i]) {
-      result.innerHTML = `Sorry, your score is ${score}. You guessed correctly these nrs: ${matchedNr}`;
+      result.innerHTML = `Sorry, your score is ${score}. You correctly guessed only ${score} nrs: ${matchedNr}`;
     } else {
       matchedNr.push(userArray[i]);
       score++;
-      result.innerHTML = `Congrats! Your score is ${score}. You guessed correctly these nrs: ${matchedNr}`;
+      result.innerHTML = `Congrats! Your score is ${score}. You correctly guessed these nrs: ${matchedNr}`;
     }
   }
 }
