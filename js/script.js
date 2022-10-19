@@ -62,17 +62,19 @@ function userGuess() {
 
 function printNrIntoDom() {
   console.log("userarray", userArray, "rndArray", rndArray);
-
   yourNrs.innerHTML = userArray;
   prevNrs.innerHTML = rndArray;
 }
 
 function checkResult() {
+  let matchedNr = [];
   for (let i = 0; i < rndArray.length; i++) {
     if (rndArray[i] !== userArray[i]) {
-      result.innerHTML = score;
+      result.innerHTML = `Sorry, your score is ${score}. You guessed correctly these nrs: ${matchedNr}`;
     } else {
+      matchedNr.push(userArray[i]);
       score++;
+      result.innerHTML = `Congrats! Your score is ${score}. You guessed correctly these nrs: ${matchedNr}`;
     }
   }
 }
