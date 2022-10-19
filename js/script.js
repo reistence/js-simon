@@ -13,6 +13,7 @@ const yourNrs = document.getElementById("your-nrs");
 const result = document.getElementById("result");
 const rndArray = [];
 let userArray = [];
+let score = 0;
 
 for (i = 0; i < 5; i++) {
   let rndNr = getRndNr(1, 100);
@@ -26,7 +27,10 @@ const promptTime = setTimeout(() => {
   console.log(userArray);
 }, 5000);
 
-const printTime = setTimeout(printNrIntoDom, 6000);
+const printTime = setTimeout(() => {
+  printNrIntoDom();
+  checkResult();
+}, 6000);
 
 // FUNCTIONs
 
@@ -61,10 +65,14 @@ function printNrIntoDom() {
 
   yourNrs.innerHTML = userArray;
   prevNrs.innerHTML = rndArray;
-  if (userArray === rndArray) {
-    result.innerHTML = "User won";
-  }
-  if (userArray != rndArray) {
-    result.innerHTML = "User lost";
+}
+
+function checkResult() {
+  for (let i = 0; i < rndArray.length; i++) {
+    if (rndArray[i] !== userArray[i]) {
+      result.innerHTML = score;
+    } else {
+      score++;
+    }
   }
 }
